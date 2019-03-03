@@ -1,0 +1,178 @@
+#include<stdio.h>
+#include<stdlib.h>
+int a=0;
+ typedef struct AVL{
+	int data;
+	int balance;
+	struct AVL *left;
+	struct AVL *right;
+};
+ typedef struct AVL avl;
+ int balancee(avl *);
+ int height(avl *node){
+    int lh;
+	int rh;
+    if(node==NULL)
+        return 0;
+    
+    if(node->left==NULL)
+        lh=0;
+    else
+        lh=1+node->left->balance;
+        
+    if(node->right==NULL)
+        rh=0;
+    else
+        rh=1+node->right->balance;
+    if(lh > rh)
+    	return lh;
+    	else return rh;
+	
+}
+avl * rotateleft(avl *node){
+    avl *temp;
+    temp=node->right;
+    node->right=temp->left;
+    temp->left=node;
+    node->balance=height(node);
+    temp->balance=height(temp);
+    return temp;
+}
+ 
+avl* RR(avl *node){
+    node=rotateleft(node);
+    return node;
+}
+avl * rotateright(avl *node){
+    avl *temp;
+    temp=node->left;
+    node->left=temp->right;
+    temp->right=node;
+    node->balance=height(node);
+    temp->balance=height(temp);
+    return temp;
+}
+avl * LL(avl *node){
+    node=rotateright(node);
+    return node;
+}
+ avl * LR(avl *node){
+    node->left=rotateleft(node->left);
+    node=rotateright(node);
+    return node;
+}
+avl * RL(avl *node){
+    node->right=rotateright(node->right);
+    node=rotateleft(node);
+    return node;
+}
+
+avl * insert(avl *node,int value){
+    if(node==NULL){
+        node=(avl*)malloc(sizeof(avl));
+        node->data=value;
+        node->left=NULL;
+        node->right=NULL;
+    }
+    else
+	{
+    
+        if(value > node->data){
+            node->right=insert(node->right,value);
+            if(balancee(node) == -2)
+                if(value > node->right->data)
+                    node=RR(node);
+                else
+                    node=RL(node);
+        }
+        else
+            if(value < node->data){
+                node->left=insert(node->left,value);
+                if((balancee(node))== 2)
+                    if(value < node->left->data)            
+					          node=LL(node);
+                  else
+                        node=LR(node);
+            }
+        node->balance=height(node);
+        }
+        return node;  }
+
+
+
+ 
+ int balancee(avl *node){	
+    int lh;
+    int rh;
+    if(node==NULL)
+        return 0;
+ 
+    if(node->left==NULL)
+        lh=0;
+    else
+        lh=1+node->left->balance;
+ 
+    if(node->right==NULL)
+        rh=0;
+    else
+        rh=1+node->right->balance;
+ 
+    return (lh-rh);
+}
+
+void print(avl *node){
+    if (node != NULL){
+    print(node->left);
+printf("%d\n", node->data);
+print(node->right);
+    }
+}
+
+void printhigh(avl *node,int high,char d){
+    	if (node == NULL)
+       		return;
+    	if (high == 1){
+		printf("%d ", node->data);
+		if(a != 0){ 
+			printf("(%d %c) ",a,d);
+		}
+		printf("(%d B) ",balancee(node));
+	}
+    	else if (high > 1){
+		a=node->data;
+        	printhigh(node->left, high-1,'L');
+        	printhigh(node->right, high-1,'R');
+    	}
+}
+
+void printAVL(avl *node){
+int size = height(node)+1;
+int a;
+    for (a=1; a<=size; a++){
+		printf("\n");
+       		printhigh(node, a,' ');
+	}
+}
+ 
+int main(){
+int a;
+avl *node=NULL;
+scanf("%d",&a);
+	if(a!=-1){
+        node=insert(node,a); }
+	else
+	return -1;
+                
+	while(a!=-1){               
+   	scanf("%d",&a);
+	if(a==-1){
+	break;
+	}
+   node=insert(node,a);
+	}
+print(node);
+printAVL(node);
+    return 0;
+}
+ 
+
