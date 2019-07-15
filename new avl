@@ -1,0 +1,72 @@
+#include <iostream> 
+using namespace std; 
+ #include <bits/stdc++.h> 
+struct AVL { 
+    int data; 
+    struct AVL* left; 
+    struct AVL* right; 
+}; 
+  
+struct AVL* newNode(int data); 
+  
+struct AVL* sorting(int arr[], int start, int end) 
+{ 
+ 
+    if (start > end) 
+        return NULL; 
+  
+    int medyan = (start + end) / 2; 
+    struct AVL* root = newNode(arr[medyan]); 
+  
+    
+    root->left = sorting(arr, start, medyan - 1); 
+  
+   
+    root->right = sorting(arr, medyan + 1, end); 
+  
+    return root; 
+} 
+
+struct AVL* newNode(int data) 
+{ 
+    struct AVL* node = (struct AVL*) 
+        malloc(sizeof(struct AVL)); 
+    node->data = data; 
+    node->left = NULL; 
+    node->right = NULL; 
+  
+    return node; 
+} 
+  
+void printAVL(AVL *root)  
+{  
+    if (root == NULL)  return ;  
+  
+    queue<AVL *> q;  
+    q.push(root);  
+    
+    while (q.empty() == false)  
+    {  
+        AVL *node = q.front();  
+        cout << node->data << " ";  
+        q.pop();  
+        if (node->left != NULL)  
+            q.push(node->left);  
+        if (node->right != NULL)  
+            q.push(node->right);  
+    }  
+}    
+  
+
+int main() 
+{ 
+  
+  
+    int myarray[] = { 1, 2, 3, 4, 5, 6, 7 ,8}; 
+    int a = sizeof(myarray) / sizeof(myarray[0]); 
+  
+    struct AVL* root = sorting(myarray, 0, a - 1); 
+    printAVL(root); 
+  
+    return 0; 
+} 
