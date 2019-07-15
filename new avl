@@ -62,7 +62,7 @@ int main()
 { 
   
   
-    int myarray[] = { 1, 2, 3, 4, 5, 6, 7 ,8}; 
+    int myarray[] = { 2,4,6,8,10}; 
     int a = sizeof(myarray) / sizeof(myarray[0]); 
   
     struct AVL* root = sorting(myarray, 0, a - 1); 
