@@ -38,24 +38,21 @@ struct AVL* newNode(int data)
     return node; 
 } 
   
-void printAVL(AVL *root)  
+void print(AVL *root)  
 {  
-    if (root == NULL)  return ;  
-  
-    queue<AVL *> q;  
-    q.push(root);  
-    
-    while (q.empty() == false)  
+
+    if(root != NULL)  
+
     {  
-        AVL *node = q.front();  
-        cout << node->data << " ";  
-        q.pop();  
-        if (node->left != NULL)  
-            q.push(node->left);  
-        if (node->right != NULL)  
-            q.push(node->right);  
+
+        cout << root->data << " ";  
+
+        print(root->left);  
+
+        print(root->right);  
+
     }  
-}    
+}  
   
 
 int main() 
@@ -66,7 +63,7 @@ int main()
     int a = sizeof(myarray) / sizeof(myarray[0]); 
   
     struct AVL* root = sorting(myarray, 0, a - 1); 
-    printAVL(root); 
+    print(root); 
   
     return 0; 
 } 
