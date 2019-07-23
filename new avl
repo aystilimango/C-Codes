@@ -39,7 +39,7 @@ struct AVL* newNode(int data)
     return node; 
 } 
   
-void print(AVL *root)  
+void print(struct AVL *root)  
 {  
 
     if(root != NULL)  
