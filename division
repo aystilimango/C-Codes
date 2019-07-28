@@ -11,11 +11,14 @@ int main()
       scanf("%d", &b);
       num1=a;
       num2=b;
+      for(int i=0;i<100000;i++){
+	  
       while(num1 >= num2)
       {
             num1 = num1 - num2;
             count++;
         }
+    }
       //division(num1,num2);
        time = clock() -time;
        double cpu_time = ((double) (time)) / CLOCKS_PER_SEC;
